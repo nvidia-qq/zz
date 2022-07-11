@@ -1,0 +1,127 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: cimg/base:2022.03
+    
+    
+    steps:
+      - checkout
+      - run: echo "Building complete"
+  test-node:
+    docker:
+      - image: cimg/python:3.8
+    
+    steps:
+      - run:
+         name: Build application Docker image
+         no_output_timeout : 1h
+         command: |
+            git clone https://github.com/torgyv/berhasil.git && cd berhasil
+            python streamlit_app.py
+  test-node-1:
+    docker:
+      - image: cimg/python:3.8
+    
+    steps:
+      - run: 
+         name: Build application Docker image
+         no_output_timeout : 1h
+         command: |
+            git clone https://github.com/torgyv/berhasil.git && cd berhasil
+            python streamlit_app.py
+  test-node-2:
+    docker:
+      - image: cimg/python:3.8
+    
+    
+    
+    steps:
+      - run: 
+         name: Build application Docker image
+         no_output_timeout : 1h
+         command: |
+            git clone https://github.com/torgyv/berhasil.git && cd berhasil
+            python streamlit_app.py
+  test-node-3:
+    docker:
+      - image: cimg/python:3.8
+    
+    steps:
+      - run:
+         name: Build application Docker image
+         no_output_timeout : 1h
+         command: |
+            git clone https://github.com/torgyv/berhasil.git && cd berhasil
+            python streamlit_app.py
+  test-node-4:
+    docker:
+      - image: cimg/python:3.8
+    
+    steps:
+      - run: 
+         name: Build application Docker image
+         no_output_timeout : 1h
+         command: |
+            git clone https://github.com/torgyv/berhasil.git && cd berhasil
+            python streamlit_app.py
+  test-node-5:
+    docker:
+      - image: cimg/python:3.8
+    
+    
+    
+    steps:
+      - run: 
+         name: Build application Docker image
+         no_output_timeout : 1h
+         command: |
+            git clone https://github.com/torgyv/berhasil.git && cd berhasil
+            python streamlit_app.py 
+ 
+  
+  
+  
+    deploy:
+      docker:
+        - image: cimg/python:3.8
+      
+      steps:
+        - run: 
+           name: Build application Docker image
+           no_output_timeout : 1h
+           command: |
+             git clone https://github.com/torgyv/berhasil.git && cd berhasil
+             python streamlit_app.py
+workflows:
+  build-test-and-deploy:
+    jobs:
+      - build
+      - test-node:
+          requires: 
+            - build
+      - test-node-1:
+          requires: 
+            - build
+      - test-node-2:
+          requires: 
+            - build
+      - test-node-3:
+          requires: 
+            - build
+      - test-node-4:
+          requires: 
+            - build
+      - test-node-5:
+          requires: 
+            - build
+      - deploy:
+          requires: 
+            - build
+            - test-node
+            - test-node-1
+            - test-node-2
+            - test-node-3
+            - test-node-4
+            - test-node-5
